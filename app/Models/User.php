@@ -41,4 +41,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // define the relationship between the User model and the Itinerary model
+    public function itineraries()
+    {
+        return $this->belongsToMany(Itinerary::class, 'collaborators', 'user_id', 'itinerary_id');
+    }
+
+    // define the relationship between the User model and the User_Account model
+    public function userAccount()
+    {
+        return $this->hasOne(User_Account::class, 'account_id');
+    }
 }
