@@ -14,12 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('places', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('location_name');
             $table->string('location_address')->nullable();
             $table->string('location_google_map_url');
-            $table->time('location_start_time');
-            $table->time('location_end_time');
             $table->double('ratings');
             $table->bigInteger('number_of_reviews');
             $table->string('location_type');

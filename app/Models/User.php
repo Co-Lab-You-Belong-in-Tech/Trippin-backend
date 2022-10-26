@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'initials',
     ];
 
     /**
@@ -42,15 +43,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // define the relationship between the User model and the Itinerary model
-    public function itineraries()
+    // define the relationship between the User model and the Trip model
+    public function trips()
     {
-        return $this->belongsToMany(Itinerary::class, 'collaborators', 'user_id', 'itinerary_id');
+        return $this->belongsToMany(Trip::class, 'user_trips', 'user_id', 'trip_id');
     }
 
-    // define the relationship between the User model and the User_Account model
-    public function userAccount()
+    // define the relationship between the User model and the UserTrip model
+    public function user_trips()
     {
-        return $this->hasOne(User_Account::class, 'account_id');
+        return $this->hasMany(UserTrip::class, 'user_id');
     }
+
 }

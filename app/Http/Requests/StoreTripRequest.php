@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreItineraryRequest extends FormRequest
+class StoreTripRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,16 @@ class StoreItineraryRequest extends FormRequest
     public function rules()
     {
         return [
-            'trip_name' => 'required|string',
-            'trip_destination' => 'required|string',
+            //return newly created trip
+            'trip_name' => 'required|string|max:255',
+            'trip_destination' => 'required|string|max:255',
             'trip_start_date' => 'required|date',
             'trip_end_date' => 'required|date',
-            'trip_planner_name' => 'required|string',
-            'email' => 'nullable|email',
-            'destination_google_map_url' => 'required|string',
-            'trip_background_image_url' => 'required|string',
+            'planner_name' => 'string|max:255',
+            'email' => 'required|string|email|max:255',
+            'destination_google_map_url' => 'required|string|max:255',
+            'trip_background_image_url' => 'required|string|max:255',
+
         ];
     }
 }

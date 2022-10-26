@@ -9,6 +9,19 @@ class Itinerary extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'trip_name',
+        'trip_destination',
+        'trip_start_date',
+        'trip_end_date',
+        'trip_planner_name',
+        'email',
+        'destination_google_map_url',
+        'trip_background_image_url',
+
+
+    ];
+
     // define the relationship between the Itinerary model and the User model
     public function users()
     {

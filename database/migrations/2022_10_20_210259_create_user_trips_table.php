@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('days', function (Blueprint $table) {
+        Schema::create('user_trips', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('location_id')->index();
-            $table->foreign('location_id')->references('id')->on('places')->cascadeOnDelete();
-            $table->date('date');
+            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignId('trip_id')->nullable()->index();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('trip_id')->references('id')->on('trips')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('days');
+        Schema::dropIfExists('user_trips');
     }
 };

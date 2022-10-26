@@ -15,18 +15,15 @@ return new class extends Migration
     {
         Schema::create('itineraries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('trip_name');
-            $table->string('trip_destination');
-            $table->string('trip_planner_name')->nullable();
-            $table->string('email')->nullable();
-            $table->date('trip_start_date');
-            $table->date('trip_end_date');
+            $table->date('itinerary_start_time');
+            $table->date('itinerary_end_time');
+            $table->date('itinerary_date');
+            $table->foreignId('user_trip_id')->index();
+            $table->foreign('user_trip_id')->references('id')->on('user_trips')->cascadeOnDelete();
+            $table->foreignId('trip_id')->index();
+            $table->foreign('trip_id')->references('id')->on('trips')->cascadeOnDelete();
             $table->foreignId('location_id')->nullable()->index();
-            $table->foreignId('day_id')->nullable()->index();
             $table->foreign('location_id')->references('id')->on('places')->cascadeOnDelete();
-            $table->foreign('day_id')->references('id')->on('days')->cascadeOnDelete();
-            $table->string('destination_google_map_url');
-            $table->string('trip_background_image_url');
             $table->softDeletes();
             $table->timestamps();
         });
