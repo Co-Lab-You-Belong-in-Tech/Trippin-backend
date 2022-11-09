@@ -16,17 +16,23 @@ class ItineraryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'trip_name'=> $this->trip_name,
-            'trip_destination'=> $this->trip_destination,
-            'trip_start_date'=> $this->trip_start_date,
-            'trip_end_date'=> $this->trip_end_date,
-            'trip_planner_name'=> $this->trip_planner_name,
-            'email'=> $this->email,
-            'destination_google_map_url'=> $this->destination_google_map_url,
-            'trip_background_image_url'=> $this->trip_background_image_url,
-            'days' => $this->days,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'itinerary_location' => $this->itinerary_location,
+            'description' => $this->description,
+            'itinerary_start_time' => $this->itinerary_start_time,
+            'itinerary_end_time' => $this->itinerary_end_time,
+            'location_latitude' => $this->location_latitude,
+            'location_longitude' => $this->location_longitude,
+            'location_image' => $this->location_image,
+            'itinerary_date' => $this->itinerary_date,
+            'ratings' => $this->ratings,
+            'number_of_reviews' => $this->number_of_reviews,
+            'location_type' => $this->location_type,
+            'location_google_map_url' => $this->location_google_map_url,
+            'is_public' => $this->is_public,
+            'user_id' => $this->user_id,
+            'trip_id' => $this->trip_id,
+
+
         ];
     }
 }

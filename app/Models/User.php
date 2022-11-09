@@ -46,13 +46,18 @@ class User extends Authenticatable
     // define the relationship between the User model and the Trip model
     public function trips()
     {
-        return $this->belongsToMany(Trip::class, 'user_trips', 'user_id', 'trip_id');
+        return $this->belongsToMany(Trip::class, 'trip_user', 'user_id', 'trip_id');
     }
 
-    // define the relationship between the User model and the UserTrip model
+    // define the relationship between the User model and the TripUser model
     public function user_trips()
     {
-        return $this->hasMany(UserTrip::class, 'user_id');
+        return $this->hasMany(TripUser::class, 'user_id');
     }
 
+    // define the relationship between the User model and the UserProfile model
+    public function userProfile()
+    {
+        return $this->hasOne(UserProfile::class, 'user_id');
+    }
 }

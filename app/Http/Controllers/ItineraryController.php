@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreItineraryRequest;
 use App\Http\Requests\UpdateItineraryRequest;
+use App\Http\Resources\ItineraryResource;
 use App\Models\Itinerary;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ItineraryController extends Controller
 {
@@ -27,18 +29,33 @@ class ItineraryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreItineraryRequest  $request
-     * @return JsonResponse
+     * @return ItineraryResource
      */
 
-    // create new itinerary with validation
-public function store(StoreItineraryRequest $request)
-    {
-        $itinerary = Itinerary::create($request->validated());
+//  take in the trip id as parameter and create an itinerary and associate it with the authenticated user and the current trip id and record the trip id and user id in the user_trips pivot table
 
-        return new JsonResponse([
-            'data' => $itinerary
-        ]);
+    public function store(StoreItineraryRequest $request, $trip_id) {
+    $itinerary = new Itinerary();
+    //validate the request
+    $itinerary->fill($request->validated());
+    $itinerary->user_id = Auth::id();
+    $itinerary->trip_id = $trip_id;
+    $itinerary->save();
+    //record the trip id and user id in the user_trips pivot table
+    $itinerary->users()->attach($itinerary->user_id, ['trip_id' => $itinerary->trip_id]);
+    return new ItineraryResource($itinerary);
     }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Display the specified resource.

@@ -9,7 +9,10 @@ use App\Http\Resources\ItineraryResource;
 use App\Http\Resources\TripResource;
 use App\Http\Resources\UserResource;
 use App\Models\Trip;
+use App\Models\User;
+use App\Models\TripUser;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class TripController extends Controller
 {
@@ -18,12 +21,14 @@ class TripController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    //show all trips of a user
+    //show all trips of the logged in user by querying the UserTrips pivot table and use the user_id field to access the trips table
     public function index()
     {
-        $trips = Trip::with('user_trip_id')->get();
+        $user = Auth::user();
+        $trips = $user->trips()->get();
         return TripResource::collection($trips);
     }
+
 
     //show all itineraries of a trip
     public function itineraries(Trip $trip)
@@ -38,21 +43,38 @@ class TripController extends Controller
      * @param  \App\Http\Requests\StoreTripRequest  $request
      * @return TripResource
      */
-   //create a new trip and add the user to it
+   //create a new trip and attach it to the authenticated user with and record the trip id and user id in the trip_user pivot table
     public function store(StoreTripRequest $request)
     {
         $trip = Trip::create($request->validated());
-        $user_id = Auth::user()->id;
-        $trip->user_trips()->attach($request->user()->id);
+        $trip->users()->attach(Auth::user()->id);
         return new TripResource($trip);
     }
 
-    // add itineraries to a trip
-    public function addItinerary(Trip $trip, StoreItineraryRequest $request)
+    //add collaborators to a trip by  email and validate the email  and then attach the collaborators to the trip
+    public function addCollaborators(StoreTripRequest $request, Trip $trip)
     {
-        $itinerary = $trip->itineraries()->create($request->validated());
-        return new ItineraryResource($itinerary);
+        $trip->users()->attach($request->validated());
+        return new TripResource($trip);
     }
+
+
+
+    // send email invitation
+
+
+    //remove collaborators from a trip by taking using only email and then detach the collaborators from the trip
+    public function removeCollaborators(StoreTripRequest $request, Trip $trip)
+    {
+        $trip->users()->detach($request->email, ['trip_id' => $trip->id]);
+        return new TripResource($trip);
+    }
+
+
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -76,10 +98,21 @@ class TripController extends Controller
      */
     public function update(UpdateTripRequest $request, Trip $trip)
     {
-        // update a trip
-        $trip->update($request->validated());
-        return new TripResource($trip);
-
+        // check if the user is the owner of the trip and then update the trip with an image
+        if($trip->id === Auth::user()->id){
+            $trip->update($request->validated());
+            if($request->hasFile('image')){
+                $image = $request->file('image');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('images/' . $filename);
+                Image::make($image)->resize(800, 400)->save($location);
+                $trip->image = $filename;
+                $trip->save();
+            }
+        }
+        else{
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
     /**
@@ -88,11 +121,16 @@ class TripController extends Controller
      * @param  \App\Models\Trip  $trip
      * @return \Illuminate\Http\JsonResponse
      */
-    //delete a trip
+    //check if the user is authorized to delete the trip and then delete the trip with all the itineraries and the user_trips pivot table entries and return a json response
     public function destroy(Trip $trip)
     {
-        $trip->delete();
-        return response()->json(null, 204);
+        if($trip->id === Auth::user()->id){
+            $trip->delete();
+            return response()->json(['success' => 'Trip deleted successfully'], 200);
+        }
+        else{
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
     //show users on a trip

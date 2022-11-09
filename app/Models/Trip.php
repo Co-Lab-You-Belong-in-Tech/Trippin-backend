@@ -9,6 +9,10 @@ class Trip extends Model
 {
     use HasFactory;
 
+    protected $table = 'trips';
+
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'trip_name',
         'trip_destination',
@@ -17,24 +21,25 @@ class Trip extends Model
         'trip_planner_name',
         'email',
         'destination_google_map_url',
-        'trip_background_image_url',
+        'trip_background_image',
+        'user_id',
     ];
 
     // define the relationship between the Trip model and the User model
-    public function user()
+    public function users()
     {
-        return $this->belongsToMany(User::class, 'user_trips', 'trip_id', 'user_id');
+        return $this->belongsToMany(User::class, 'trip_user', 'user_id', 'trip_id');
     }
 
-    // define the relationship between the Trip model and the UserTrip model
-    public function user_trips()
+    // define the relationship between the Trip model and the TripUser model
+    public function trip_user()
     {
-        return $this->hasMany(UserTrip::class, 'trip_id');
+        return $this->hasMany(TripUser::class, 'trip_id');
     }
 
     // define the relationship between the Trip model and the Itinerary model
     public function itineraries()
     {
-        return $this->hasMany(Itinerary::class, 'user_trip_id');
+        return $this->hasMany(Itinerary::class, 'trip_id', 'id');
     }
 }

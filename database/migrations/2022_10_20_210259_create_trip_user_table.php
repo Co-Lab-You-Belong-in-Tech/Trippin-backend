@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_trips', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->foreignId('user_id')->nullable()->index();
-            $table->foreignId('trip_id')->nullable()->index();
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreign('trip_id')->references('id')->on('trips')->cascadeOnDelete();
+        Schema::create('trip_user', function (Blueprint $table) {
+            //$table->bigIncrements('id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('trip_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
-            $table->timestamps();
+            //$table->timestamps();
+            //$table->primary(['user_id', 'trip_id']);
         });
     }
 

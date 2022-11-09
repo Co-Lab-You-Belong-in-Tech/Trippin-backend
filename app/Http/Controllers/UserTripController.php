@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserTripRequest;
 use App\Http\Requests\UpdateUserTripRequest;
-use App\Models\UserTrip;
+use App\Models\TripUser;
 
 class UserTripController extends Controller
 {
@@ -32,10 +32,10 @@ class UserTripController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\UserTrip  $userTrip
+     * @param  \App\Models\TripUser  $userTrip
      * @return \Illuminate\Http\Response
      */
-    public function show(UserTrip $userTrip)
+    public function show(TripUser $userTrip)
     {
         //
     }
@@ -44,10 +44,10 @@ class UserTripController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateUserTripRequest  $request
-     * @param  \App\Models\UserTrip  $userTrip
+     * @param  \App\Models\TripUser  $userTrip
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserTripRequest $request, UserTrip $userTrip)
+    public function update(UpdateUserTripRequest $request, TripUser $userTrip)
     {
         //
     }
@@ -55,10 +55,10 @@ class UserTripController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserTrip  $userTrip
+     * @param  \App\Models\TripUser  $userTrip
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserTrip $userTrip)
+    public function destroy(TripUser $userTrip)
     {
         //
     }

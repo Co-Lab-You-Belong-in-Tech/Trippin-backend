@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\UserTrip;
+use App\Models\TripUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserTripPolicy
@@ -25,10 +25,10 @@ class UserTripPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\UserTrip  $userTrip
+     * @param  \App\Models\TripUser  $userTrip
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, UserTrip $userTrip)
+    public function view(User $user, TripUser $userTrip)
     {
         //
     }
@@ -48,10 +48,10 @@ class UserTripPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\UserTrip  $userTrip
+     * @param  \App\Models\TripUser  $userTrip
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, UserTrip $userTrip)
+    public function update(User $user, TripUser $userTrip)
     {
         //
     }
@@ -60,10 +60,10 @@ class UserTripPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\UserTrip  $userTrip
+     * @param  \App\Models\TripUser  $userTrip
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, UserTrip $userTrip)
+    public function delete(User $user, TripUser $userTrip)
     {
         //
     }
@@ -72,10 +72,10 @@ class UserTripPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\UserTrip  $userTrip
+     * @param  \App\Models\TripUser  $userTrip
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, UserTrip $userTrip)
+    public function restore(User $user, TripUser $userTrip)
     {
         //
     }
@@ -84,10 +84,10 @@ class UserTripPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\UserTrip  $userTrip
+     * @param  \App\Models\TripUser  $userTrip
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, UserTrip $userTrip)
+    public function forceDelete(User $user, TripUser $userTrip)
     {
         //
     }

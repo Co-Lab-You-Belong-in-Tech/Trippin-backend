@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 //register routes
-
 Route::prefix('v1')->group(function(){
     $files = glob(__DIR__ . '/api/v1/*.php');
     foreach ($files as $file) {
@@ -23,6 +22,3 @@ Route::prefix('v1')->group(function(){
     }
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});

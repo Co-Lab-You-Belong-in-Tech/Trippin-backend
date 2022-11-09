@@ -14,15 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('trips', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('trip_name');
             $table->string('trip_destination');
             $table->string('trip_planner_name')->nullable();
-            $table->string('email')->nullable();
             $table->date('trip_start_date');
             $table->date('trip_end_date');
-            $table->string('destination_google_map_url');
-            $table->string('trip_background_image_url');
+            $table->string('destination_google_map_url')->nullable();
+            $table->string('trip_background_image')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

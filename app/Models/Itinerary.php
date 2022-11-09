@@ -9,35 +9,51 @@ class Itinerary extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'trip_name',
-        'trip_destination',
-        'trip_start_date',
-        'trip_end_date',
-        'trip_planner_name',
-        'email',
-        'destination_google_map_url',
-        'trip_background_image_url',
+    protected $table = 'itineraries';
+    protected $dates = ['start_date', 'end_date'];
 
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'location_name',
+        'description',
+        'itinerary_start_time',
+        'itinerary_end_time',
+        'location_latitude',
+        'location_longitude',
+        'location_image',
+        'itinerary_date',
+        'ratings',
+        'number_of_reviews',
+        'location_type',
+        'location_google_map_url',
 
     ];
 
     // define the relationship between the Itinerary model and the User model
     public function users()
     {
-        return $this->belongsToMany(User::class, 'collaborators', 'itinerary_id', 'user_id');
+        return $this->belongsToMany(User::class, 'collaborators', 'trip_id', 'user_id');
     }
 
-    // define the relationship between the Itinerary model and the Place model
+    /*// define the relationship between the Itinerary model and the Place model
     public function places()
     {
         return $this->belongsToMany(Place::class, 'days', 'itinerary_id', 'location_id');
-    }
+    }*/
 
     // define the relationship between the Itinerary model and the Day model
-public function days()
+/*public function days()
 {
     return $this->hasMany(Day::class, 'itinerary_id');
+}*/
+
+// define the relationship between the Itinerary model and the Trip model
+public function trip()
+{
+    return $this->belongsTo(Trip::class, 'trip_id', 'id');
 }
 
 }
+
+

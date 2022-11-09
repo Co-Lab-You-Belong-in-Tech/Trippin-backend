@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_accounts', function (Blueprint $table) {
+        Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('itineraries_id');
-            $table->foreign('itineraries_id')->references('id')->on('itineraries')->cascadeOnDelete();
+            $table->foreignId('trip_id');
+            $table->foreign('trip_id')->references('id')->on('trips')->cascadeOnDelete();
             $table->timestamps();
         });
     }

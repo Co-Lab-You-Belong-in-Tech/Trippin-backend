@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -13,10 +14,13 @@ class UserController extends Controller
     //register a new user and hash the password and issue a token and return 201 status code
     public function register(StoreUserRequest $request)
     {
+        //trim two letter initials from the email address and use it as the initials and save it to the database
+        $initials = substr($request->email, 0, 2);
         $user = User::create($request->validated());
         $user->password = bcrypt($request->password);
+        $user->initials = $initials;
         $user->save();
-        $token = $user->createToken('token')->plainTextToken;
+        $token = $user->createToken('API Token of '. $user->email)->plainTextToken;
         $response = [
             'user' => new UserResource($user),
             'token' => $token
@@ -24,13 +28,13 @@ class UserController extends Controller
         return response($response, 201);
     }
 
-    //logout the user
+    //logout the user by revoking the token
     public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
-        return [
-            'message' => 'Logged out successfully'
-        ];
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'Logged out'
+        ]);
     }
 
     //login the user
@@ -54,4 +58,32 @@ class UserController extends Controller
         ];
         return response($response, 200);
     }
+
+    //show the authenticated user
+    public function profile()
+    {
+        $user = Auth::user();
+        return new UserResource($user);
+    }
+
+
+
+
+    // update the password of the current logged in user by their id and return 200 status code
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string|confirmed'
+        ]);
+        $user = User::find(Auth::id());
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return response()->json([
+            'message' => 'Password updated successfully'
+        ], 200);
+    }
+
+
+
+
 }

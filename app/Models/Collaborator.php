@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Collaborator extends Model
 {
     use HasFactory;
+
+    protected $table = 'collaborators';
+
+
 }

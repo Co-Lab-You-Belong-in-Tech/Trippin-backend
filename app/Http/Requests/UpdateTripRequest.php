@@ -13,7 +13,7 @@ class UpdateTripRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -34,9 +34,8 @@ class UpdateTripRequest extends FormRequest
                     'trip_start_date' => 'required|date',
                     'trip_end_date' => 'required|date',
                     'planner_name' => 'string|max:255',
-                    'email' => 'required|string|email|max:255',
-                    'destination_google_map_url' => 'required|string|max:255',
-                    'trip_background_image_url' => 'required|string|max:255',
+                    'destination_google_map_url' => 'string|max:255',
+                    'trip_background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 ];
             case 'PATCH':
                 return [
@@ -46,8 +45,8 @@ class UpdateTripRequest extends FormRequest
                     'trip_end_date' => 'sometimes','date',
                     'planner_name' => 'sometimes','string|max:255',
                     'email' => 'sometimes','string|email|max:255',
-                    'destination_google_map_url' => 'sometimes','string|max:255',
-                    'trip_background_image_url' => 'sometimes','string|max:255',
+                    'destination_google_map_url' => 'string|max:255',
+                    'trip_background_image' => 'sometimes','image|mimes:jpeg,png,jpg,gif|max:2048',
                 ];
             default:
                 return [];

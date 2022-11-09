@@ -24,14 +24,17 @@ class StoreItineraryRequest extends FormRequest
     public function rules()
     {
         return [
-            'trip_name' => 'required|string',
-            'trip_destination' => 'required|string',
-            'trip_start_date' => 'required|date',
-            'trip_end_date' => 'required|date',
-            'trip_planner_name' => 'required|string',
-            'email' => 'nullable|email',
-            'destination_google_map_url' => 'required|string',
-            'trip_background_image_url' => 'required|string',
+            'location_name' => 'required|string',
+            'description' => 'string',
+            'itinerary_date' => 'required|date',
+            'itinerary_start_time' => 'required|date_format:H:i',
+            'itinerary_end_time' => 'required|date_format:H:i',
+            'location_latitude' => 'required|numeric',
+            'location_longitude' => 'required|numeric',
+            'location_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'ratings' => 'numeric',
+            'number_of_reviews' => 'numeric',
+            'location_type' => 'string',
         ];
     }
 }

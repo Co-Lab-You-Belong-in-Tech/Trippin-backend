@@ -21,11 +21,8 @@ class TripResource extends JsonResource
             'trip_start_date'=> $this->trip_start_date,
             'trip_end_date'=> $this->trip_end_date,
             'trip_planner_name'=> $this->trip_planner_name,
-            'email'=> $this->email,
             'destination_google_map_url'=> $this->destination_google_map_url,
-            'trip_background_image_url'=> $this->trip_background_image_url,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'trip_background_image'=> $this->trip_background_image,
         ];
     }
 }

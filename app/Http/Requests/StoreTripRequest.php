@@ -30,9 +30,7 @@ class StoreTripRequest extends FormRequest
             'trip_start_date' => 'required|date',
             'trip_end_date' => 'required|date',
             'planner_name' => 'string|max:255',
-            'email' => 'required|string|email|max:255',
-            'destination_google_map_url' => 'required|string|max:255',
-            'trip_background_image_url' => 'required|string|max:255',
+            'destination_google_map_url' => 'string|max:255',
 
         ];
     }

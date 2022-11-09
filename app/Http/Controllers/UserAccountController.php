@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUser_AccountRequest;
 use App\Http\Requests\UpdateUser_AccountRequest;
-use App\Models\User_Account;
+use App\Models\User_Profile;
 
 class UserAccountController extends Controller
 {
@@ -32,10 +32,10 @@ class UserAccountController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User_Account  $user_Account
+     * @param  \App\Models\User_Profile  $user_Account
      * @return \Illuminate\Http\Response
      */
-    public function show(User_Account $user_Account)
+    public function show(User_Profile $user_Account)
     {
         //
     }
@@ -44,10 +44,10 @@ class UserAccountController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateUser_AccountRequest  $request
-     * @param  \App\Models\User_Account  $user_Account
+     * @param  \App\Models\User_Profile  $user_Account
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUser_AccountRequest $request, User_Account $user_Account)
+    public function update(UpdateUser_AccountRequest $request, User_Profile $user_Account)
     {
         //
     }
@@ -55,10 +55,10 @@ class UserAccountController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User_Account  $user_Account
+     * @param  \App\Models\User_Profile  $user_Account
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User_Account $user_Account)
+    public function destroy(User_Profile $user_Account)
     {
         //
     }
