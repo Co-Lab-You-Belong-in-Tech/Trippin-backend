@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCollaboratorRequest;
 use App\Http\Requests\StoreItineraryRequest;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
@@ -52,12 +53,21 @@ class TripController extends Controller
         return new TripResource($trip);
     }
 
-    //add collaborators to a trip by  email and validate the email  and then attach the collaborators to the trip
-    public function addCollaborators(StoreTripRequest $request, Trip $trip)
+    //invite a collaborator to a trip with email and validate the email  and then associate the collaborator with the trip
+    public function inviteCollaborator(StoreCollaboratorRequest $request, Trip $trip)
     {
-        $trip->users()->attach($request->validated());
-        return new TripResource($trip);
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            $trip->users()->attach($user->id);
+            //return the initials of the collaborator with a success message
+            return response()->json([
+                'initials' => $user->initials,
+                'message' => 'Collaborator added successfully'
+            ], 200);
+        }
+        return response()->json(['message' => 'User not found'], 404);
     }
+
 
 
 
