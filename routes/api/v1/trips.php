@@ -22,7 +22,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/trips/{trip}', [TripController::class, 'destroy']);
     Route::post('/trips/{trip}/itineraries', [ItineraryController::class, 'store']);
     Route::get('/trips/{trip}/itineraries', [TripController::class, 'itineraries']);
-    Route::post('/trips/{trip}/collaborators', [TripController::class, 'inviteCollaborator']);
+    Route::post('/trips/{trip}/addCollaborator', [TripController::class, 'inviteCollaborator']);
+    // get all collaborators of a trip
+    Route::get('/trips/{trip}/collaborators', [TripController::class, 'collaborators']);
 });
 
 

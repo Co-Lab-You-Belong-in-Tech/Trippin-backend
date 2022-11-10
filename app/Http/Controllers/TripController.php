@@ -53,25 +53,37 @@ class TripController extends Controller
         return new TripResource($trip);
     }
 
-    //invite a collaborator to a trip with email and validate the email  and then associate the collaborator with the trip
+    //invite a collaborator to a trip with email validation and then associate the user with the trip with a successful response and 201 status code and return the initial of the user
     public function inviteCollaborator(StoreCollaboratorRequest $request, Trip $trip)
     {
         $user = User::where('email', $request->email)->first();
-        if ($user) {
-            $trip->users()->attach($user->id);
-            //return the initials of the collaborator with a success message
-            return response()->json([
-                'initials' => $user->initials,
-                'message' => 'Collaborator added successfully'
-            ], 200);
+        if (!$user) {
+            return response([
+                'message' => ['This email does not match our records.']
+            ], 404);
         }
-        return response()->json(['message' => 'User not found'], 404);
+        $trip->users()->attach($user->id);
+        return response([
+            'message' => 'Collaborator added successfully with email invitation',
+            'initials' => $user->initials
+        ], 201);
     }
 
 
 
 
-    // send email invitation
+
+
+
+    //show the collaborators of a trip
+    public function collaborators(Trip $trip)
+    {
+        $users = $trip->users()->get();
+        return UserResource::collection($users);
+    }
+
+    // send email invitation to a collaborator
+
 
 
     //remove collaborators from a trip by taking using only email and then detach the collaborators from the trip
