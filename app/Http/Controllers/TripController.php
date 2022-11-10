@@ -94,9 +94,11 @@ class TripController extends Controller
      * @return TripResource
      */
 
-    //show a trip
+    //show a single trip of the current authenticated user
     public function show(Trip $trip)
     {
+        $user = Auth::user();
+        $trip = $user->trips()->where('id', $trip->id)->firstOrFail();
         return new TripResource($trip);
     }
 
