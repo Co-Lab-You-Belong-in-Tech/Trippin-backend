@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('trip_id')->index();
             $table->foreign('trip_id')->references('id')->on('trips')->cascadeOnDelete();
-            $table->primary(['user_id', 'trip_id']);
             $table->softDeletes();
             //$table->bigIncrements('id');
             $table->timestamps();
