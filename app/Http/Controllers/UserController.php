@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Resources\TripResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,6 +51,7 @@ class UserController extends Controller
                 'message' => ['These credentials do not match our records.']
             ], 404);
         }
+
         $token = $user->createToken('token')->plainTextToken;
         $response = [
             'user' => new UserResource($user),
@@ -59,13 +61,24 @@ class UserController extends Controller
         return response($response, 200);
     }
 
-    //show the authenticated user
+    //retrieve the authenticated user and the  trips associated with the user in the trips table by querying the trip_user pivot table and return the user and the trips in a nested array
     public function profile()
     {
         $user = Auth::user();
-        return new UserResource($user);
-    }
+        $trips = $user->trips()->get();
 
+        //loop through the trips and display only unique trips
+        $uniqueTrips = [];
+        foreach ($trips as $trip) {
+            if (!in_array($trip, $uniqueTrips)) {
+                array_push($uniqueTrips, $trip);
+            }
+        }
+        return response([
+            'user' => new UserResource($user),
+            'trips' => TripResource::collection($uniqueTrips)
+        ]);
+    }
 
 
 

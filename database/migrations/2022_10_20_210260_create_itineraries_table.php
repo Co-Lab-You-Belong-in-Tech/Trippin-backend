@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->time('itinerary_start_time')->nullable();
             $table->time('itinerary_end_time')->nullable();
-            $table->date('itinerary_date')->nullable();
+            $table->string('itinerary_date')->nullable();
             $table->string('location_address')->nullable();
             $table->string('location_google_map_url')->nullable();
-            $table->decimal('location_latitude');
-            $table->decimal('location_longitude');
+            $table->decimal('location_latitude')->nullable();
+            $table->decimal('location_longitude')->nullable();
             $table->string('location_image')->nullable();
             $table->double('ratings');
             $table->bigInteger('number_of_reviews');

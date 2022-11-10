@@ -49,14 +49,6 @@ class ItineraryController extends Controller
 
 
 
-
-
-
-
-
-
-
-
     /**
      * Display the specified resource.
      *
@@ -77,21 +69,30 @@ class ItineraryController extends Controller
      *
      * @param  \App\Http\Requests\UpdateItineraryRequest  $request
      * @param  \App\Models\Itinerary  $itinerary
-     * @return \Illuminate\Http\Response
+     * @return ItineraryResource
      */
     public function update(UpdateItineraryRequest $request, Itinerary $itinerary)
     {
-        //
+        //update the itinerary with start time, end time and date and return the updated itinerary
+        $itinerary->update($request->all());
+        return new ItineraryResource($itinerary);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Itinerary  $itinerary
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function destroy(Itinerary $itinerary)
     {
-        //
+        // delete the itinerary  and return a successful deleted message with 204 status code
+        $itinerary->delete();
+        return response()->json(
+            //return a successful deleted message
+            ['message' => 'Itinerary deleted successfully'],
+            204);
+
     }
 }

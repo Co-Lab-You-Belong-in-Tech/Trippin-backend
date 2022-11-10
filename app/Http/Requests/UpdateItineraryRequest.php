@@ -13,7 +13,7 @@ class UpdateItineraryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateItineraryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'itinerary_date' => 'string',
+            'itinerary_start_time' => 'date_format:H:i',
+            'itinerary_end_time' => 'date_format:H:i',
         ];
     }
 }

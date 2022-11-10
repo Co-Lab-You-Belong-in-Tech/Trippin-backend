@@ -62,9 +62,11 @@ class TripController extends Controller
                 'message' => ['This email does not match our records.']
             ], 404);
         }
+
+
         $trip->users()->attach($user->id);
         return response([
-            'message' => 'Collaborator added successfully with email invitation',
+            'message' => 'Collaborator added successfully. Email invitation sent to ' . $user->email,
             'initials' => $user->initials
         ], 201);
     }
@@ -126,14 +128,15 @@ class TripController extends Controller
         // check if the user is the owner of the trip and then update the trip with an image
         if($trip->id === Auth::user()->id){
             $trip->update($request->validated());
-            if($request->hasFile('image')){
-                $image = $request->file('image');
+            if($request->hasFile('trip_background_image')){
+                $image = $request->file('trip_background_image');
                 $filename = time() . '.' . $image->getClientOriginalExtension();
                 $location = public_path('images/' . $filename);
                 Image::make($image)->resize(800, 400)->save($location);
-                $trip->image = $filename;
+                $trip->trip_background_image = $filename;
                 $trip->save();
             }
+            return new TripResource($trip);
         }
         else{
             return response()->json(['error' => 'Unauthorized'], 401);

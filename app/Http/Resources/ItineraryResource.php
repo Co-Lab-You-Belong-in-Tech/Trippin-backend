@@ -16,7 +16,7 @@ class ItineraryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'itinerary_location' => $this->itinerary_location,
+            'location_name' => $this->location_name,
             'description' => $this->description,
             'itinerary_start_time' => $this->itinerary_start_time,
             'itinerary_end_time' => $this->itinerary_end_time,
@@ -28,7 +28,7 @@ class ItineraryResource extends JsonResource
             'number_of_reviews' => $this->number_of_reviews,
             'location_type' => $this->location_type,
             'location_google_map_url' => $this->location_google_map_url,
-            'is_public' => $this->is_public,
+            //'is_public' => $this->is_public,
             'user_id' => $this->user_id,
             'trip_id' => $this->trip_id,
 

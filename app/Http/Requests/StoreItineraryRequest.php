@@ -26,15 +26,15 @@ class StoreItineraryRequest extends FormRequest
         return [
             'location_name' => 'required|string',
             'description' => 'string',
-            'itinerary_date' => 'required|date',
+            'itinerary_date' => 'string',
             'itinerary_start_time' => 'required|date_format:H:i',
             'itinerary_end_time' => 'required|date_format:H:i',
-            'location_latitude' => 'required|numeric',
-            'location_longitude' => 'required|numeric',
+            'location_latitude' => 'numeric',
+            'location_longitude' => 'numeric',
             'location_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'ratings' => 'numeric',
-            'number_of_reviews' => 'numeric',
-            'location_type' => 'string',
+            'ratings' => 'required|numeric',
+            'number_of_reviews' => 'required|numeric',
+            'location_type' => 'required|string',
         ];
     }
 }
