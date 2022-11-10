@@ -28,7 +28,7 @@ class Trip extends Model
     // define the relationship between the Trip model and the User model
     public function users()
     {
-        return $this->belongsToMany(User::class, 'trip_user', 'user_id', 'trip_id');
+        return $this->belongsToMany(User::class, 'trip_user', 'trip_id', 'user_id');
     }
 
     // define the relationship between the Trip model and the TripUser model

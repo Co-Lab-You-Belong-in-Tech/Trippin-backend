@@ -43,11 +43,12 @@ class TripController extends Controller
      * @param  \App\Http\Requests\StoreTripRequest  $request
      * @return TripResource
      */
-   //create a new trip and attach it to the authenticated user with and record the trip id and user id in the trip_user pivot table
+   //create a new trip and attach it to the authenticated user with and record the trip id and user id in the trip_user pivot table allow the user to create  multiple trips
     public function store(StoreTripRequest $request)
     {
-        $trip = Trip::create($request->validated());
-        $trip->users()->attach(Auth::user()->id);
+        $user = Auth::user();
+        $trip = Trip::create($request->all());
+        $trip->users()->attach($user->id);
         return new TripResource($trip);
     }
 
