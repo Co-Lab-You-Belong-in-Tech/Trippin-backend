@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use App\Traits\Uuids;
 
 class TripUser extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
 
     // define the relationship between the TripUser model and the User model
     public function user()

@@ -25,8 +25,8 @@ class UpdateItineraryRequest extends FormRequest
     {
         return [
             'itinerary_date' => 'string',
-            'itinerary_start_time' => 'date_format:H:i',
-            'itinerary_end_time' => 'date_format:H:i',
+            'itinerary_start_time' => 'string',
+            'itinerary_end_time' => 'string',
         ];
     }
 }

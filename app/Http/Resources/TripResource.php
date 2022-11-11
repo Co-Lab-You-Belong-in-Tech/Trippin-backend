@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\Uid\Uuid;
 
 class TripResource extends JsonResource
 {
