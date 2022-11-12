@@ -24,6 +24,7 @@ class TripResource extends JsonResource
             'trip_planner_name'=> $this->trip_planner_name,
             'destination_google_map_url'=> $this->destination_google_map_url,
             'trip_background_image'=> $this->trip_background_image,
+            'trip_code'=> $this->trip_code,
         ];
     }
 }

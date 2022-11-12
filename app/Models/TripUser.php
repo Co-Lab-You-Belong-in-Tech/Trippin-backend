@@ -9,7 +9,7 @@ use App\Traits\Uuids;
 
 class TripUser extends Model
 {
-    use HasFactory, Uuids;
+    use HasFactory;
 
     // define the relationship between the TripUser model and the User model
     public function user()

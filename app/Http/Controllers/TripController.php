@@ -48,7 +48,9 @@ class TripController extends Controller
     public function store(StoreTripRequest $request)
     {
         $user = Auth::user();
-        $trip = Trip::create($request->all());
+        $trip_code = $this->generateTripCode();
+        //add the trip code when creating a new trip
+        $trip = Trip::create($request->validated() + ['trip_code' => $trip_code]);
         $trip->users()->attach($user->id);
         return new TripResource($trip);
     }
@@ -166,6 +168,27 @@ class TripController extends Controller
     {
         return UserResource::collection($trip->users);
     }
+
+  //generate trip code
+    public function generateTripCode()
+    {
+        $user = Auth::user();
+        $trip_code = '#' . strtoupper(substr($user->email, 0, 3) . str_pad($user->trips()->count() + 1, 3, '00', STR_PAD_LEFT));
+        return $trip_code;
+    }
+
+   /* public function generateTripCode()
+    {
+        $user = Auth::user();
+        $initials = strtoupper(substr($user->email, 0, 2));
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = $characters[rand(0, strlen($characters) - 1)];
+        $trip_code = '#' . $initials . $randomString . $user->trips()->count();
+        return $trip_code;
+    }
+*/
+
+
 }
 
 

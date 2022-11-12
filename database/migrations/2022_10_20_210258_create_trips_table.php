@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('trips', function (Blueprint $table) {
             $table->increments('id');
             $table->string('trip_name');
-            //$table->string('trip_code')->nullable();
+            $table->string('trip_code');
             $table->string('trip_destination');
             $table->string('trip_planner_name')->nullable();
             $table->date('trip_start_date');

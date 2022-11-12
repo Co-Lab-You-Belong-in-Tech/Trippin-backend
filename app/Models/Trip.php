@@ -25,6 +25,7 @@ class Trip extends Model
         'destination_google_map_url',
         'trip_background_image',
         'user_id',
+        'trip_code',
     ];
 
     // define the relationship between the Trip model and the User model
