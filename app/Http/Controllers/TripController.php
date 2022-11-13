@@ -31,13 +31,17 @@ class TripController extends Controller
     }
 
 
-    //show all itineraries of a trip
-    public function itineraries(Trip $trip)
-    {
-        $itineraries = $trip->itineraries()->get();
-        return ItineraryResource::collection($itineraries);
-    }
+    //show all itineraries of a trip and add the trip itself to the response
+     public function itineraries(Trip $trip)
+     {
+          $itineraries = $trip->itineraries()->get();
+         return response()->json([
+             'trip' => $trip,
+             'itineraries' => $itineraries
+         ]);
 
+
+     }
     /**
      * Store a newly created resource in storage.
      *
@@ -151,17 +155,18 @@ class TripController extends Controller
      * @param  \App\Models\Trip  $trip
      * @return \Illuminate\Http\JsonResponse
      */
-    //check if the user is authorized to delete the trip and then delete the trip with all the itineraries and the user_trips pivot table entries and return a json response
+    //check if the user is authenticated and check if the trip exists in the trip_user pivot table and then delete the trip
     public function destroy(Trip $trip)
     {
-        if($trip->id === Auth::user()->id){
-            $trip->delete();
-            return response()->json(['success' => 'Trip deleted successfully'], 200);
-        }
-        else{
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        $user = Auth::user();
+        $trip = $user->trips()->where('id', $trip->id)->firstOrFail();
+        $trip->delete();
+        return response()->json(null, 204);
     }
+
+
+
+
 
     //show users on a trip
     public function users(Trip $trip)

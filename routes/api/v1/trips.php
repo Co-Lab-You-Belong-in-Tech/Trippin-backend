@@ -20,8 +20,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/trips/{trip}', [TripController::class, 'update']);
     Route::patch('/trips/{trip}', [TripController::class, 'update']);
     Route::delete('/trips/{trip}', [TripController::class, 'destroy']);
+    //add itineraries to a trip
     Route::post('/trips/{trip}/itineraries', [ItineraryController::class, 'store']);
     Route::get('/trips/{trip}/itineraries', [TripController::class, 'itineraries']);
+    //delete an itinerary from a trip
+    Route::delete('/trips/{trip}/itineraries/{itinerary}', [ItineraryController::class, 'destroy']);
     Route::post('/trips/{trip}/addCollaborator', [TripController::class, 'inviteCollaborator']);
     // get all collaborators of a trip
     Route::get('/trips/{trip}/collaborators', [TripController::class, 'collaborators']);

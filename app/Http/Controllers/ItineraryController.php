@@ -85,14 +85,13 @@ class ItineraryController extends Controller
      * @param  \App\Models\Itinerary  $itinerary
      * @return JsonResponse
      */
-    public function destroy(Itinerary $itinerary)
+    // Take in the itinerary id as parameter and delete the itinerary  from a trip and return a successful deleted message
+    public function destroy($itinerary_id)
     {
-        // delete the itinerary  and return a successful deleted message with 204 status code
-        $itinerary->delete();
-        return response()->json(
-            //return a successful deleted message
-            ['message' => 'Itinerary deleted successfully'],
-            204);
+        Itinerary::destroy($itinerary_id);
+        return new JsonResponse([
+            'message' => 'Itinerary deleted successfully'
 
+        ],204);
     }
 }
