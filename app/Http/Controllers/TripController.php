@@ -22,11 +22,10 @@ class TripController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    //show all trips of the logged in user by querying the UserTrips pivot table and use the user_id field to access the trips table
+    //show all trips of the logged in user with their associated itineraries from the itineraries table
     public function index()
     {
-        $user = Auth::user();
-        $trips = $user->trips()->get();
+        $trips = Auth::user()->trips()->with('itineraries')->get();
         return TripResource::collection($trips);
     }
 

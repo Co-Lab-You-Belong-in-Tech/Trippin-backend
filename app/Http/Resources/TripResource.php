@@ -25,6 +25,7 @@ class TripResource extends JsonResource
             'destination_google_map_url'=> $this->destination_google_map_url,
             'trip_background_image'=> $this->trip_background_image,
             'trip_code'=> $this->trip_code,
+            'itineraries' => ItineraryResource::collection($this->whenLoaded('itineraries')),
         ];
     }
 }
